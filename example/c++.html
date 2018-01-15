@@ -1,0 +1,60 @@
+﻿<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>C++</title>
+  <link rel="stylesheet" type="text/css" href="c++.css">
+  <script src="../plugin/jquery/2.1.4/jquery.min.js"></script>
+  <script src="../doc-by-context.js"></script>
+  <script src="../context/javascript.js"></script>
+  <script src="../context/c++.js"></script>
+  <script src="c++.js"></script>
+ </head>
+ <body>
+
+  <h1>Example 1</h1>
+  <pre data-ref-class="ref"
+    data-engine="cplusplus"
+    data-include-only="iostream cout endl"
+  >
+#include &lt;iostream&gt;
+
+using namespace std;
+
+int main() {
+    cout &lt;&lt; "Hello, world!" &lt;&lt; endl;
+    return 0;
+}
+  </pre>
+  
+  
+  <h1>Example 2</h1>
+  <pre data-ref-class="refRed"
+    data-engine="cplusplus"
+    data-include-only="
+      iostream vector
+      std::begin|iterator/begin
+      std::end|iterator/end
+      cout endl"
+  >
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main () {
+  int foo[] = { 10, 20, 30, 40, 50 };
+  vector&lt;int&gt; bar;
+
+  for (auto it = std::begin(foo); it!=std::end(foo); ++it)
+    bar.push_back( sqrt( *it ) );
+
+  cout &lt;&lt; "bar contains:";
+  for (auto it = std::begin(bar); it!=std::end(bar); ++it)
+    cout &lt;&lt; ' ' &lt;&lt; *it;
+  cout &lt;&lt; '\n';
+
+  return 0;
+}
+  </pre>
+
+ </body>
+</html>

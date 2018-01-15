@@ -1,0 +1,83 @@
+﻿<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>AngelScrip</title>
+  <link rel="stylesheet" type="text/css" href="angelscript.css">
+  <script src="../plugin/jquery/2.1.4/jquery.min.js"></script>
+  <script src="../doc-by-context.js"></script>
+  <script src="../context/javascript.js"></script>
+  <script src="../context/angelscript.js"></script>
+  <script src="angelscript.js"></script>
+ </head>
+ <body>
+
+  <h1>Example 1</h1>
+  <pre
+    data-engines="angelscript 3dcoat"
+    data-angelscript-search="|http://angelcode.com/angelscript/sdk/docs/manual/"
+    data-angelscript-ref-class="ref"
+    data-angelscript-include-only="
+        AngelScript|index.html
+        sqrt|doc_addon_math.html
+        cos|doc_addon_math.html
+        sin|doc_addon_math.html
+    data-3dcoat-search="http://j.mp/3dc-angelscript |http://3d-coat.com/"
+    data-3dcoat-ref-class="ref"
+    data-3dcoat-include-only="
+        3D-Coat|
+        Vox MeshContainer Vec3 Mat4
+    "
+  >
+// @source http://signmotion.blogspot.com/2015/11/blog-post.html
+// Модель, заданная функцией на 3D-холсте.
+// Код AngelScript для 3D-Coat 4.5.21.
+void main() {
+
+    // подготавливаем сцену
+    Vox  v;
+    v.clearScene();
+    v.toSurface();
+
+    // строим некую 3D-структуру
+    const int  IU = 4;
+    const int  ITETA = 3;
+    const float  S = 5.0;
+    const float  PI = 3.14159;
+    for ( int iu = -IU; iu &lt;= IU; ++iu ) {
+        for ( int iteta = 0; iteta &lt;= ITETA; ++iteta ) {
+            MeshContainer  figure;
+            const float  u = 1.0 * iu / IU;
+            const float  teta = 2.0 * PI * iteta / ITETA;
+            const float  x = sqrt( 1.0 - u * u ) * cos( teta );
+            const float  y = sqrt( 1.0 - u * u ) * sin( teta );
+            const float  z = u;
+            const float  radius = (iteta + u * u) * S + 1;
+            figure.createSphere( radius );
+            const Vec3  tr = Vec3( x, y, z ) * radius * 1.7 * S;
+            const Mat4  m( "translation", tr );
+            figure.transform( m );
+            figure.addToTheRoom();
+        } // iteta
+    } // iu
+
+    // удаляем первый (пустой) слой со сцены
+    v.first();
+    v.del();
+
+    // раскрашиваем каждый слой "случайным цветом"
+    v.first();
+    int  r = 251;
+    int  g = 241;
+    int  b = 239;
+    for ( bool has = true; has; has = v.next() ) {
+        v.setColorRGB( r, g, b );
+        r = (r * g) % 0xFF;
+        g = (g * b) % 0xFF;
+        b = (b * r) % 0xFF;
+    }
+}
+  </pre>
+
+ </body>
+</html>
